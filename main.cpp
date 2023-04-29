@@ -8,6 +8,7 @@
 #include "function.h"
 #include <string>
 #include <sstream>
+#include <iomanip>
 
 using namespace std;
 
@@ -21,7 +22,7 @@ class travel
 
 public:
     void set_val();
-    void show_val();
+    void show_val(int serial_number);
     void create_itinerary();
     void list_itinerary();
     void search_itinerary();
@@ -53,9 +54,9 @@ void travel::set_val()
 }
 
 // this function shows the value in an object
-void travel::show_val()
+void travel::show_val(int serial_number)
 {
-    std::cout << title_of_itinerary << "\t\t" << starting_point << "\t" << destination << "\t" << days << "\t" << expenses << "\n";
+    std::cout << serial_number << "\t" << left << setw(45) << title_of_itinerary << left << setw(20) << starting_point << left << setw(20) << destination << left << setw(8) << days << left << setw(8) << expenses << "\n";
 }
 
 // this function is used to create itinerary
@@ -73,26 +74,22 @@ void travel::create_itinerary()
 void travel::list_itinerary()
 {
     ifstream fileList;
-    int n = 0, i = 0;
+    int n = 0;
     fileList.open("itinerary.txt", std::ios::in);
     fileList.seekg(0, std::ios::end);
     int filesize = fileList.tellg();
     int obj = filesize / sizeof(travel);
-    std::cout << obj;
+    // std::cout << obj;
     fileList.seekg(0, std::ios::beg);
     travel t;
     fileList.read((char *)&t, sizeof(t));
-    std::cout << "S.N\tTitle of Itinerary\tStarting Point\tDestination\tDays\tExpenses\n";
+    std::cout << "\n"
+              << "S.N\t" << left << setw(45) << "Title of Itinerary" << left << setw(20) << "Starting Point" << left << setw(20) << "Destination" << left << setw(8) << "Days" << left << setw(8) << "Expenses\n";
     while (fileList)
     {
         n++;
-        if (n == obj)
-        {
-            break;
-        }
-        std::cout << n << "\t";
+        t.show_val(n);
         fileList.read((char *)&t, sizeof(t));
-        t.show_val();
     }
     fileList.close();
 }
