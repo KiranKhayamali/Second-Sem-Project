@@ -321,7 +321,7 @@ book_top:
         std::cout << "Enter number of people: ";
         std::cin >> number_of_people;
     date_start:
-        std::cout << "Departure Date [Please use space as separator] (yyyy-mm-dd):";
+        std::cout << "Departure Date [Please use space as separator] (yyyy mm dd):";
         std::cin >> year >> month >> day;
         if (date_check(year, month, day) != 1)
         { // date check() function is defined in function.h header file, this function checks if the entered date is correct or not
