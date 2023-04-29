@@ -186,9 +186,9 @@ void travel::delete_itinerary()
     getline(cin >> ws, dec_title);
     std::ifstream fin("itinerary.txt", ios::in);
     std::ofstream fout("bin.txt", ios::out);
+    fin.read((char *)this, sizeof(travel));
     while (!fin.eof())
     {
-        fin.read((char *)this, sizeof(travel));
         if (title_of_itinerary == dec_title)
         {
             std::cout << "\n Title of itinerary " << title_of_itinerary;
@@ -208,6 +208,7 @@ void travel::delete_itinerary()
         {
             fout.write((char *)this, sizeof(travel));
         }
+        fin.read((char *)this, sizeof(travel));
     }
 
     fin.close();
