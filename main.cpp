@@ -7,6 +7,7 @@
 #include "loadingfnc.h"
 #include "function.h"
 #include <string>
+#include <sstream>
 
 using namespace std;
 
@@ -28,6 +29,7 @@ public:
     void delete_itinerary();
     void admin_dashboard();
     void book_form();
+    int get_integer_from_user_input();
 };
 
 // this function sets the value of an object when called
@@ -45,9 +47,9 @@ void travel::set_val()
     cin.getline(destination, sizeof(travel));
     // cin >> destination;
     std::cout << "Days: ";
-    std::cin >> days;
+    days = get_integer_from_user_input();
     std::cout << "Expenses: ";
-    std::cin >> expenses;
+    expenses = get_integer_from_user_input();
 }
 
 // this function shows the value in an object
@@ -358,8 +360,30 @@ book_top:
     }
 }
 
+int travel::get_integer_from_user_input()
+{
+    string line;
+    int x;
+    while (getline(cin, line))
+    {
+        stringstream ss(line);
+        if (ss >> x)
+        {
+            if (ss.eof())
+            {
+                break;
+            }
+        }
+        cout << "Invalid Input!"
+             << "\n"
+             << "Please enter integer:";
+    }
+    return x;
+}
+
 int main()
 {
+    system("cls");
     gotoxy(40, 5); // gotoxy(x,y) function is defined in cusgraphics.h function, this function is used to locate the cursor at the x and y coordinate
     firstload();   // this is defined in loading.h header file
     gotoxy(45, 8);
@@ -389,6 +413,10 @@ top:
         {
             t.book_form();
         }
+        else
+        {
+            std::cout << "Thank you for using our services.";
+        }
         getch();
         goto top;
         break;
@@ -400,6 +428,10 @@ top:
         if (ch == 'y' || ch == 'Y')
         {
             t.book_form();
+        }
+        else
+        {
+            std::cout << "Thank you for using our services.";
         }
         getch();
         goto top;
